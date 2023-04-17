@@ -144,6 +144,7 @@ back_map.addEventListener('click', (e) => {
     };
     selectedArea = '';
     showMarks = '';
+    $marks.innerHTML = showMarks;
     $mapLinks.forEach(el => {
         if (el.id != 'mark') {
             let currentPolygon = el.querySelectorAll('polygon');
@@ -153,7 +154,6 @@ back_map.addEventListener('click', (e) => {
             el.setAttribute('transform', '');
         }
     });
-    $marks.innerHTML = showMarks;
 });
 
 
@@ -177,13 +177,30 @@ function getMarks(selfClass) {
             console.log(answer);
             counter = 0;
             for (el in answer.cities) {
-                showMarks += `<a id="mark" href='${answer.cities[el].src}' target="_blank" style="cursor:pointer;"><path d="M12,2C8.1,2,5,5.1,5,9c0,6,7,13,7,13s7-7.1,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z" transform="translate(${answer.cities[el].x},${answer.cities[el].y})"/></a><text transform="translate(${answer.cities[el].x},${answer.cities[el].y})">${el}</text>`;
+                showMarks += `<a id="mark" href='${el}' target="_blank" style="cursor:pointer;"><path d="M12,2C8.1,2,5,5.1,5,9c0,6,7,13,7,13s7-7.1,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z" transform="translate(${answer.cities[el].x},${answer.cities[el].y})"/></a><text transform="translate(${answer.cities[el].x},${answer.cities[el].y})">${el}</text>`;
             }
             do {
                 currentDate = Date.now();
             } while (currentDate - date < 200);
             $marks.innerHTML = showMarks;
+            listenMarks();
         }
     };
     $marks.innerHTML = showMarks;
+}
+
+function listenMarks() {
+    marksList = $marks.querySelectorAll('a');
+    marksList.forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            selfClass = el.getAttribute('href');
+            currentElement = document.querySelector(`.map a[href="${selectedArea}"]`);
+            console.log(currentElement);
+            currentElement.setAttribute('transform', `scale(4, 4) translate(-520, -400)`);
+            showMarks = '';
+            $marks.innerHTML = showMarks
+            console.log(selfClass);
+        });
+    });
 }
