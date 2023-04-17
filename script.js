@@ -2,6 +2,7 @@ const $leftLinks = document.querySelectorAll('.left-menu a');
 const $mapLinks = document.querySelectorAll('.map a');
 const $info = document.querySelector('.info');
 const $marks = document.getElementById('marks');
+const $back_map = document.getElementById('back_map');
 
 const requestData = (id = 1) => {
     fetch('data.json')
@@ -57,11 +58,6 @@ $leftLinks.forEach(el => {
 
     el.addEventListener('click', (e) => {
         if (selectedArea != '') {
-            currentElement = document.querySelector(`.map a[href="${selectedArea}"]`);
-            currentPolygon = currentElement.querySelectorAll('polygon');
-            currentPath = currentElement.querySelectorAll('path');
-            if (currentPolygon) currentPolygon.forEach(el => el.style.cssText = `opacity: 0.1;`);
-            if (currentPath) currentPath.forEach(el => el.style.cssText = `opacity: 0.1;`);
             currentElement = document.querySelector(`.left-menu a[href="${selectedArea}"]`);
             currentElement.classList.remove('active');
         }
@@ -141,7 +137,29 @@ $mapLinks.forEach(el => {
     });
 });
 
+back_map.addEventListener('click', (e) => {
+    if (selectedArea != '') {
+        currentElement = document.querySelector(`.left-menu a[href="${selectedArea}"]`);
+        currentElement.classList.remove('active');
+    };
+    selectedArea = '';
+    showMarks = '';
+    $mapLinks.forEach(el => {
+        if (el.id != 'mark') {
+            let currentPolygon = el.querySelectorAll('polygon');
+            let currentPath = el.querySelectorAll('path');
+            if (currentPolygon) currentPolygon.forEach(el => el.style.cssText = `opacity: 1;`);
+            if (currentPath) currentPath.forEach(el => el.style.cssText = `opacity: 1;`);
+            el.setAttribute('transform', '');
+        }
+    });
+    $marks.innerHTML = showMarks;
+});
+
+
 function getMarks(selfClass) {
+    const date = Date.now();
+    let currentDate = null;
     let xhr = new XMLHttpRequest();
     // 2. Настраиваем его: GET-запрос по URL /article/.../load
     xhr.open('GET', `http://45.146.166.178:5000/area='${selfClass.slice(1)}'`);
@@ -157,10 +175,13 @@ function getMarks(selfClass) {
             answer = JSON.parse(xhr.response);
             answer.cities = JSON.parse(answer.cities);
             console.log(answer);
-            console.log(1);
+            counter = 0;
             for (el in answer.cities) {
-                showMarks += `<a id="mark" href='${answer.cities[el].src}' target="_blank" style="cursor:pointer; transition: all 1s;"><path d="M12,2C8.1,2,5,5.1,5,9c0,6,7,13,7,13s7-7.1,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z" transform="translate(${answer.cities[el].x},${answer.cities[el].y})"/></a>`;
+                showMarks += `<a id="mark" href='${answer.cities[el].src}' target="_blank" style="cursor:pointer;"><path d="M12,2C8.1,2,5,5.1,5,9c0,6,7,13,7,13s7-7.1,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z" transform="translate(${answer.cities[el].x},${answer.cities[el].y})"/></a><text transform="translate(${answer.cities[el].x},${answer.cities[el].y})">${el}</text>`;
             }
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < 200);
             $marks.innerHTML = showMarks;
         }
     };
