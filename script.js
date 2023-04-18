@@ -204,3 +204,30 @@ function listenMarks() {
         });
     });
 }
+
+function init() {
+    // Создает экземпляр карты и привязывает его к созданному контейнеру
+    var map = new YMaps.Map(YMaps.jQuery("#YMapsID")[0]);
+
+    // Устанавливает центр и масштаб карты
+    map.setCenter(new YMaps.GeoPoint(82.88576487, 55.15463775), 4); //Центр карты, масштаб
+    map.enableScrollZoom(); //Масштаблирование с помощью колесика мыши
+    map.addControl(new YMaps.TypeControl()); //Типы карты
+    map.addControl(new YMaps.SmallZoom()); //Зум
+    map.addControl(new YMaps.MiniMap()); //Миникарта
+
+    // Создает метку по координатам
+    var placemark = new YMaps.Placemark(new YMaps.GeoPoint(104.26052455, 52.27136719), { hideIcon: false, style: "default#greenPoint" });
+
+    // Устанавливает содержимое балуна
+    placemark.name = "Иркутск";
+    placemark.description = "Какое-то возможно описание";
+
+    // Добавляет метку на карту
+    map.addOverlay(placemark);
+}
+
+window.onload = function () {
+    YMaps.load(init);
+};
+//*/
