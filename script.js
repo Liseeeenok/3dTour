@@ -216,8 +216,17 @@ function init() {
     map.addControl(new YMaps.SmallZoom()); //Зум
     map.addControl(new YMaps.MiniMap()); //Миникарта
 
+    // Создает стиль
+    var s = new YMaps.Style();
+
+    // Создает стиль значка метки
+    s.iconStyle = new YMaps.IconStyle();
+    s.iconStyle.href = "Image/icon_map.png";
+    s.iconStyle.size = new YMaps.Point(37, 36);
+    s.iconStyle.offset = new YMaps.Point(-10, -24);
+
     // Создает метку по координатам
-    var placemark = new YMaps.Placemark(new YMaps.GeoPoint(104.26052455, 52.27136719), { hideIcon: false, style: "default#greenPoint" });
+    var placemark = new YMaps.Placemark(new YMaps.GeoPoint(104.26052455, 52.27136719), { hideIcon: false, style: s });
 
     // Устанавливает содержимое балуна
     placemark.name = "Иркутск";
