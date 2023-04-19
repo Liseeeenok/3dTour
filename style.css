@@ -1,5 +1,23 @@
 /* This is the project stylesheet */
 
+@media screen and (max-width: 1920px) {
+
+}
+@media screen and (max-width: 1600px) {
+
+}
+@media screen and (max-width: 1200px) {
+
+}
+@media screen and (max-width: 998px) {
+
+}
+@media screen and (max-width: 768px) {
+
+}
+@media screen and (max-width: 576px) {
+
+}
 :root {
   /* Colors */
   --black: rgba(0, 0, 0, 1);
@@ -102,7 +120,7 @@
   width: 71px;
   height: 74px;
   position: absolute;
-  left: -58px;
+  left: -80px;
   top: -18px;
 }
 .text {
@@ -227,14 +245,14 @@
 }
 .flex-wrapper-two {
   margin-left: 1255px;
-  padding: 13px 6px 12px;
+  padding: 13px 6px 10px;
   display: flex;
   align-items: center;
   border: 2px solid var(--white);
 }
 .text-nine {
   height: 22px;
-  width: 172px;
+  width: 150px;
   color: var(--white);
   display: flex;
   text-align: center;
