@@ -31,7 +31,6 @@ fetch('data.json')
 
 requestData();
 selectedArea = '';
-console.log(moving);
 
 $leftLinks.forEach(el => {
     el.addEventListener('mouseenter', (e) => {
@@ -157,86 +156,66 @@ back_map.addEventListener('click', (e) => {
 });
 
 
-function getMarks(selfClass) {
-    const date = Date.now();
-    let currentDate = null;
-    let xhr = new XMLHttpRequest();
-    // 2. Настраиваем его: GET-запрос по URL /article/.../load
-    xhr.open('GET', `http://45.146.166.178:5000/area='${selfClass.slice(1)}'`);
-    // 3. Отсылаем запрос
-    xhr.send();
-    showMarks = '';
-    // 4. Этот код сработает после того, как мы получим ответ сервера
-    xhr.onload = function () {
-        if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
-            alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
-        } else { // если всё прошло гладко, выводим результат
-            if (xhr.response == '') return;
-            answer = JSON.parse(xhr.response);
-            answer.cities = JSON.parse(answer.cities);
-            console.log(answer);
-            counter = 0;
-            for (el in answer.cities) {
-                showMarks += `<a id="mark" href='${el}' target="_blank" style="cursor:pointer;"><path d="M12,2C8.1,2,5,5.1,5,9c0,6,7,13,7,13s7-7.1,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z" transform="translate(${answer.cities[el].x},${answer.cities[el].y})"/></a><text transform="translate(${answer.cities[el].x},${answer.cities[el].y})">${el}</text>`;
-            }
-            do {
-                currentDate = Date.now();
-            } while (currentDate - date < 200);
-            $marks.innerHTML = showMarks;
-            listenMarks();
-        }
-    };
-    $marks.innerHTML = showMarks;
+async function getMarksCities(selfClass) {
+    response = await fetch(`http://45.146.166.178:5000/city='${selfClass}'`);
+    if (response.ok) {
+        answer = await response.json();
+        answer.coordinates = JSON.parse(answer.coordinates);
+        return answer;
+    }
+    else {
+        console.log("Ошибка HTTP: " + response.status);
+    }
 }
 
-function listenMarks() {
-    marksList = $marks.querySelectorAll('a');
-    marksList.forEach(el => {
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            selfClass = el.getAttribute('href');
-            currentElement = document.querySelector(`.map a[href="${selectedArea}"]`);
-            console.log(currentElement);
-            currentElement.setAttribute('transform', `scale(4, 4) translate(-520, -400)`);
-            showMarks = '';
-            $marks.innerHTML = showMarks
-            console.log(selfClass);
-        });
-    });
-}
+var myMap;
+
+// Дождёмся загрузки API и готовности DOM.
+ymaps.ready(init);
 
 function init() {
-    // Создает экземпляр карты и привязывает его к созданному контейнеру
-    var map = new YMaps.Map(YMaps.jQuery("#YMapsID")[0]);
-
-    // Устанавливает центр и масштаб карты
-    map.setCenter(new YMaps.GeoPoint(82.88576487, 55.15463775), 4); //Центр карты, масштаб
-    map.enableScrollZoom(); //Масштаблирование с помощью колесика мыши
-    map.addControl(new YMaps.TypeControl()); //Типы карты
-    map.addControl(new YMaps.SmallZoom()); //Зум
-    map.addControl(new YMaps.MiniMap()); //Миникарта
-
-    // Создает стиль
-    var s = new YMaps.Style();
-
-    // Создает стиль значка метки
-    s.iconStyle = new YMaps.IconStyle();
-    s.iconStyle.href = "Image/icon_map.png";
-    s.iconStyle.size = new YMaps.Point(37, 36);
-    s.iconStyle.offset = new YMaps.Point(-10, -24);
-
-    // Создает метку по координатам
-    var placemark = new YMaps.Placemark(new YMaps.GeoPoint(104.26052455, 52.27136719), { hideIcon: false, style: s });
-
-    // Устанавливает содержимое балуна
-    placemark.name = "Иркутск";
-    placemark.description = "Какое-то возможно описание";
-
-    // Добавляет метку на карту
-    map.addOverlay(placemark);
+    // Создание экземпляра карты и его привязка к контейнеру с
+    // заданным id ("map").
+    myMap = new ymaps.Map('map', {
+        // При инициализации карты обязательно нужно указать
+        // её центр и коэффициент масштабирования.
+        center: [55.15463775, 82.88576487],
+        zoom: 4
+    }, {
+        searchControlProvider: 'yandex#search'
+    });
+    var collection = new ymaps.GeoObjectCollection();
+    var collectionTour = new ymaps.GeoObjectCollection();
+    var mark = new ymaps.Placemark([52.27136719, 104.26052455], {
+        iconCaption: 'Иркутск'
+    }, {
+        preset: 'islands#blueDotIconWithCaption'
+    });
+    collection.add(mark);
+    myMap.geoObjects.add(collection);
+    collection.events.add('click', async (e) => {
+        // Получим ссылку на геообъект, по которому кликнул пользователь.
+        var target = e.get('target');
+        // Получение название этого объекта
+        selfClass = target.properties._data.iconCaption;
+        // Делаем зум к метке
+        myMap.setZoom(myMap.getZoom() + 8);
+        // Переместим центр карты по координатам метки с учётом заданных отступов.
+        myMap.panTo(target.geometry.getCoordinates(), { useMapMargin: true });
+        // Удаление всех точек   
+        myMap.geoObjects.removeAll();
+        // Запрос к БД по этому городу
+        answer = await getMarksCities(selfClass);
+        console.log(answer);
+        for (el in answer.coordinates) {
+            mark = new ymaps.Placemark([answer.coordinates[el].x, answer.coordinates[el].y], {
+                balloonContent: answer.coordinates[el].src,
+                iconCaption: el
+            }, {
+                preset: 'islands#blueDotIconWithCaption'
+            });
+            collectionTour.add(mark);
+        }
+        myMap.geoObjects.add(collectionTour);
+    });
 }
-
-window.onload = function () {
-    YMaps.load(init);
-};
-//*/
