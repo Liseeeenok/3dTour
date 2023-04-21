@@ -212,7 +212,8 @@ function init() {
                 balloonContent: answer.coordinates[el].src,
                 iconCaption: el
             }, {
-                preset: 'islands#blueDotIconWithCaption'
+                preset: 'islands#blueDotIconWithCaption',
+                hasBalloon: false
             });
             collectionTour.add(mark);
         }
