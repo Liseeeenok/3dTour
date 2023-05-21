@@ -1,5 +1,9 @@
 /* This is the project stylesheet */
 
+body {
+    max-width: 1720px;
+    margin: auto;
+}
 
 :root {
   /* Colors */
@@ -143,7 +147,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  width:100%;
+  max-width: 1720px;
 }
 .flex-wrapper-one {
   background-size: 100% 100%;
@@ -158,11 +162,12 @@
 .header {
   background-color: rgba(53, 53, 53, 0.5);
   margin-bottom: 308.16px;
-  padding: 24px 466px 12px 183px;
+  padding: 24px 286px 24px 183px;
   display: flex;
   align-items: flex-start;
 }
 .relative-wrapper-one {
+    margin: auto;
   margin-right: 167px;
   position: relative;
 }
@@ -171,7 +176,7 @@
   height: 74px;
   position: absolute;
   left: -80px;
-  top: -18px;
+  top: -27px;
 }
 .text {
   max-width: 188px;
@@ -186,7 +191,6 @@
   
 }
 .frame-1547 {
-  margin-top: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -313,6 +317,7 @@
   line-height: var(--h3-line-height);
 }
 .text-ten {
+    margin-bottom: 1vw;
   height: 55px;
   width: 395px;
   color: var(--black);
@@ -394,6 +399,7 @@ a {
 
 
 .num-4-part {
+    max-width: 1720px;
   background-size: 100% 100%;
   background-position: center;
   background-image: url("https://static.overlay-tech.com/assets/af26a64a-8d28-44b0-86db-cf344b81bf9a.png");
@@ -411,13 +417,12 @@ a {
 
 
 .text-eleven {
-  
+  margin: auto;
   height: 151px;
   width: 534px;
   color: var(--white);
   display: flex;
   margin-bottom: 32px;
-  margin-left: 2px;
   letter-spacing: 0.72px;
   font-family: var(--h1-family);
   font-size: var(--h1-size);
@@ -426,6 +431,7 @@ a {
   
 }
 .text-twelve {
+    margin: auto;
   height: 100px;
   width: 536px;
   color: var(--white);
@@ -443,8 +449,8 @@ a {
   color: var(--white);
   display: flex;
   text-align: center;
+  margin: auto;
   margin-bottom: 35px;
-  margin-left: 362px;
   font-family: var(--h2-family);
   font-size: var(--h2-size);
   font-weight: var(--h2-weight);
@@ -454,16 +460,17 @@ a {
   width: 730px;
   height: 1px;
   background-color: var(--white);
+  margin-left: 60px;
   margin-bottom: 17px;
-  margin-left: 253px;
+  
 }
 .text-fourteen {
   height: 34px;
   width: 235px;
   color: var(--white);
   display: flex;
+  margin-left: 60px;
   margin-bottom: 20px;
-  margin-left: 251px;
   font-family: var(--h4-family);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
@@ -474,8 +481,8 @@ a {
   width: 786px;
   color: var(--white);
   display: flex;
+  margin-left: 60px;
   margin-bottom: 4px;
-  margin-left: 252px;
   letter-spacing: 0.54px;
   font-family: var(--h3-family);
   font-size: var(--h3-size);
@@ -487,14 +494,14 @@ a {
   height: 1px;
   background-color: var(--white);
   margin-bottom: 9px;
-  margin-left: 253px;
+  margin-left: 60px;
 }
 .vector-six {
   width: 730px;
   height: 1px;
   background-color: var(--white);
   margin-bottom: 17px;
-  margin-left: 254px;
+  margin-left: 60px;
 }
 .text-sixteen {
   height: 34px;
@@ -502,7 +509,7 @@ a {
   color: var(--white);
   display: flex;
   margin-bottom: 20px;
-  margin-left: 252px;
+  margin-left: 60px;
   font-family: var(--h4-family);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
@@ -514,7 +521,7 @@ a {
   color: var(--white);
   display: flex;
   margin-bottom: 7px;
-  margin-left: 252px;
+  margin-left: 60px;
   letter-spacing: 0.54px;
   font-family: var(--h3-family);
   font-size: var(--h3-size);
@@ -526,7 +533,7 @@ a {
   height: 1px;
   background-color: var(--white);
   margin-bottom: 9px;
-  margin-left: 254px;
+  margin-left: 60px;
 }
 .text-eighteen {
   height: 34px;
@@ -534,7 +541,7 @@ a {
   color: var(--white);
   display: flex;
   margin-bottom: 20px;
-  margin-left: 251px;
+  margin-left: 60px;
   font-family: var(--h4-family);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
@@ -545,7 +552,7 @@ a {
   width: 787px;
   color: var(--white);
   display: flex;
-  margin-left: 251px;
+  margin-left: 60px;
   letter-spacing: 0.54px;
   font-family: var(--h3-family);
   font-size: var(--h3-size);
@@ -557,14 +564,14 @@ a {
   height: 1px;
   background-color: var(--white);
   margin-bottom: 7px;
-  margin-left: 253px;
+  margin-left: 60px;
 }
 .vector-nine {
   width: 730px;
   height: 1px;
   background-color: var(--white);
   margin-bottom: 22px;
-  margin-left: 253px;
+  margin-left: 60px;
 }
 .text-twenty {
   height: 35px;
@@ -572,7 +579,7 @@ a {
   color: var(--white);
   display: flex;
   margin-bottom: 19px;
-  margin-left: 251px;
+  margin-left: 60px;
   font-family: var(--h4-family);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
@@ -584,7 +591,7 @@ a {
   color: var(--white);
   display: flex;
   margin-bottom: 5px;
-  margin-left: 253px;
+  margin-left: 60px;
   letter-spacing: 0.54px;
   font-family: var(--h3-family);
   font-size: var(--h3-size);
@@ -596,10 +603,10 @@ a {
   height: 1px;
   background-color: var(--white);
   margin-bottom: 47px;
-  margin-left: 253px;
+  margin-left: 60px;
 }
 .flex-wrapper-seven {
-  padding: 0 0 0 253px;
+  margin: auto;
   display: flex;
   align-items: flex-start;
 }
@@ -620,8 +627,8 @@ a {
   margin-top: 14px;
 }
 .num-5-part {
+    margin: auto;
   margin-bottom: 102px;
-  margin-left: 652px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -780,6 +787,7 @@ a {
   line-height: var(--h3-line-height);
 }
 .part-6 {
+    max-width: 1720px;
   background-size: 100% 100%;
   background-position: center;
   background-image: url("https://static.overlay-tech.com/assets/86bdae08-90e3-4389-ad91-0fb1b33d60fd.png");
@@ -820,8 +828,8 @@ a {
   top: 17.73px;
 }
 .part-7 {
+    margin: auto;
   margin-bottom: 52px;
-  margin-left: 519px;
   display: flex;
   align-items: flex-start;
 }
@@ -843,8 +851,9 @@ a {
   margin-top: 14px;
 }
 .footer {
+    max-width: 1720px;
   background-color: var(--transparent-white);
-  padding: 62px 404px 1px 401px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
